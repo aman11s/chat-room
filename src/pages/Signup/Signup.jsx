@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signupHandler } from "../../features";
 
 const signupFormDetails = [
   {
     id: 1,
+    label: "Username",
+    name: "username",
+    type: "text",
+  },
+  {
+    id: 2,
     label: "Email",
     name: "email",
     type: "text",
   },
   {
-    id: 2,
+    id: 3,
     label: "Password",
     name: "password",
     type: "password",
@@ -17,6 +25,7 @@ const signupFormDetails = [
 ];
 
 const initialFormDetails = {
+  username: "",
   email: "",
   password: "",
 };
@@ -24,13 +33,21 @@ const initialFormDetails = {
 export const Signup = () => {
   const [formDetails, setFormDetails] = useState(initialFormDetails);
 
+  const dispatch = useDispatch();
+
   const changeHandler = (e) => {
     setFormDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(signupHandler({ formData: formDetails }));
+    setFormDetails(initialFormDetails);
+  };
+
   return (
     <>
-      <form className="auth-form">
+      <form onSubmit={submitHandler} className="auth-form">
         <h2>Sign up</h2>
         {signupFormDetails.map((form) => {
           const { id, label, name, type } = form;
@@ -39,6 +56,7 @@ export const Signup = () => {
               <div>{label}</div>
               <input
                 onChange={changeHandler}
+                required
                 value={formDetails[name]}
                 type={type}
                 name={name}
