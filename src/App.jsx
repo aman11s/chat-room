@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Signup } from "./pages";
+import { Login, Signup } from "./pages";
 function App() {
   return (
     <div className="App">
@@ -16,6 +16,7 @@ function App() {
         {/* Publics Routes */}
         <Routes>
           <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </main>
     </div>
