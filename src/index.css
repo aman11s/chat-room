@@ -3,6 +3,8 @@
 :root {
   --app-bg-color: #e0d4f6;
   --black-color: #000;
+  --white-color: #fff;
+  --primary-btn-bg-color: #1f1f1f;
 }
 
 * {

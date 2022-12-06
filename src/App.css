@@ -33,3 +33,14 @@ button {
 .link {
   color: inherit;
 }
+
+.btn {
+  border: none;
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+
+.primary-btn {
+  background-color: var(--primary-btn-bg-color);
+  color: var(--white-color);
+}

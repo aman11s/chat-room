@@ -47,7 +47,7 @@ export const Signup = () => {
             </label>
           );
         })}
-        <button>Singup</button>
+        <button className="btn primary-btn">Singup</button>
         <Link to="/login" className="link">
           Already have an account
         </Link>

@@ -30,7 +30,7 @@ export const Login = () => {
             </label>
           );
         })}
-        <button>Login</button>
+        <button className="btn primary-btn">Login</button>
         <Link to="/signup" className="link">
           Create an account
         </Link>
