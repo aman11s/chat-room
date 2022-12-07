@@ -1,6 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Login, Signup } from "./pages";
+import { Home, Login, Signup } from "./pages";
+import { RequiresAuth } from "./components";
+
 function App() {
   return (
     <div className="App">
@@ -17,6 +19,11 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+
+          {/* Private Routes */}
+          <Route element={<RequiresAuth />}>
+            <Route path="/" element={<Home />} />
+          </Route>
         </Routes>
       </main>
     </div>
