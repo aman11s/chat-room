@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signupHandler } from "../../features";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 const signupFormDetails = [
   {
@@ -35,7 +35,12 @@ export const Signup = () => {
   const [formDetails, setFormDetails] = useState(initialFormDetails);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const {
+    userData: { token },
+  } = useSelector((store) => store.auth);
+  const location = useLocation();
+
+  const from = location?.state?.from?.pathname || "/";
 
   const changeHandler = (e) => {
     setFormDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -45,11 +50,11 @@ export const Signup = () => {
     e.preventDefault();
     await dispatch(signupHandler({ formData: formDetails }));
     setFormDetails(initialFormDetails);
-    navigate("/");
   };
 
   return (
     <>
+      {token && <Navigate to={from} replace />}
       <form onSubmit={submitHandler} className="auth-form">
         <h2>Sign up</h2>
         {signupFormDetails.map((form) => {
