@@ -1,7 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, Navigate } from "react-router-dom";
+import { loginHandler } from "../../features";
+import { useDispatch, useSelector } from "react-redux";
 
-const formDetails = [
+const loginFormDetails = [
   {
     id: 1,
     label: "Email",
@@ -16,17 +18,51 @@ const formDetails = [
   },
 ];
 
+const initialFormDetails = {
+  email: "",
+  password: "",
+};
+
 export const Login = () => {
+  const [formDetails, setFormDetails] = useState(initialFormDetails);
+
+  const {
+    userData: { token },
+  } = useSelector((store) => store.auth);
+
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const from = location?.state?.from?.pathname || "/";
+
+  const changeHandler = (e) => {
+    setFormDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    await dispatch(loginHandler({ formData: formDetails }));
+    setFormDetails(initialFormDetails);
+  };
+
   return (
     <>
-      <form className="auth-form">
+      {token && <Navigate to={from} replace />}
+      <form onSubmit={submitHandler} className="auth-form">
         <h2>Login</h2>
-        {formDetails.map((form) => {
+        {loginFormDetails.map((form) => {
           const { id, label, name, type } = form;
           return (
             <label key={id}>
               <div>{label}</div>
-              <input type={type} name={name} placeholder={`Enter ${name}`} />
+              <input
+                onChange={changeHandler}
+                value={formDetails[name]}
+                required
+                type={type}
+                name={name}
+                placeholder={`Enter ${name}`}
+              />
             </label>
           );
         })}

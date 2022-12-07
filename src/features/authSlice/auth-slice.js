@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signOut,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../firebase";
 
@@ -35,6 +36,26 @@ export const logoutHandler = createAsyncThunk(
     } catch (e) {
       console.error(e);
       return rejectWithValue(e);
+    }
+  }
+);
+
+export const loginHandler = createAsyncThunk(
+  "auth/loginHandler",
+  async ({ formData }, { rejectWithValue }) => {
+    try {
+      const { email, password } = formData;
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      const { accessToken, displayName } = res.user;
+      const user = {
+        token: accessToken,
+        username: displayName,
+        email: res.user.email,
+      };
+      return { userData: user };
+    } catch (e) {
+      console.error(e);
+      rejectWithValue(e);
     }
   }
 );
@@ -72,6 +93,19 @@ const authSlice = createSlice({
       localStorage.removeItem("userData");
     },
     [logoutHandler.rejected]: (state) => {
+      state.status = "rejected";
+    },
+
+    // Login Handler
+    [loginHandler.pending]: (state) => {
+      state.status = "pending";
+    },
+    [loginHandler.fulfilled]: (state, { payload }) => {
+      state.status = "fulfilled";
+      state.userData = payload.userData;
+      localStorage.setItem("userData", JSON.stringify(payload.userData));
+    },
+    [loginHandler.rejected]: (state) => {
       state.status = "rejected";
     },
   },
