@@ -1,0 +1,22 @@
+.channel {
+  max-width: 80vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--black-color);
+  box-shadow: 2px 2px 0px var(--black-color);
+  border-radius: 5px;
+}
+
+.msg-form {
+  margin-top: auto;
+}
+
+.msg-form input,
+.msg-form button {
+  padding: 0.5rem 1rem;
+}
+
+.msg-form input {
+  width: 80%;
+}
