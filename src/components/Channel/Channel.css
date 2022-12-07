@@ -8,6 +8,10 @@
   border-radius: 5px;
 }
 
+.messages {
+  overflow-y: auto;
+}
+
 .msg-form {
   margin-top: auto;
 }
@@ -19,4 +23,36 @@
 
 .msg-form input {
   width: 80%;
+}
+
+.msg {
+  background-color: rgba(0, 0, 0, 0.4);
+  max-width: 40%;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.my-msg {
+  margin-left: auto;
+  background-color: var(--my-msg-bg-color);
+  color: var(--white-color);
+}
+
+.send-msg-btn {
+  background-color: var(--my-msg-bg-color);
+  color: var(--white-color);
+}
+
+.msg-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.msg-date {
+  margin-left: auto;
+  font-size: 0.8rem;
+  font-weight: 200;
+  color: var(--black-color);
 }
