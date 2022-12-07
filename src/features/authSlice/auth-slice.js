@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signOut,
+} from "firebase/auth";
 import { auth } from "../../firebase";
 
 export const signupHandler = createAsyncThunk(
@@ -23,6 +27,18 @@ export const signupHandler = createAsyncThunk(
   }
 );
 
+export const logoutHandler = createAsyncThunk(
+  "auth/logoutHandler",
+  async (_, { rejectWithValue }) => {
+    try {
+      await signOut(auth);
+    } catch (e) {
+      console.error(e);
+      return rejectWithValue(e);
+    }
+  }
+);
+
 const initialState = {
   userData: JSON.parse(localStorage.getItem("userData")) || {},
   status: "idle",
@@ -33,6 +49,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // Sign up Handler
     [signupHandler.pending]: (state) => {
       state.status = "pending";
     },
@@ -42,6 +59,19 @@ const authSlice = createSlice({
       localStorage.setItem("userData", JSON.stringify(payload.userData));
     },
     [signupHandler.rejected]: (state) => {
+      state.status = "rejected";
+    },
+
+    // Logout Handler
+    [logoutHandler.pending]: (state) => {
+      state.status = "pending";
+    },
+    [logoutHandler.fulfilled]: (state) => {
+      state.status = "fulfilled";
+      state.userData = {};
+      localStorage.removeItem("userData");
+    },
+    [logoutHandler.rejected]: (state) => {
       state.status = "rejected";
     },
   },

@@ -1,1 +1,1 @@
-export { signupHandler } from "./authSlice/auth-slice";
+export { signupHandler, logoutHandler } from "./authSlice/auth-slice";
