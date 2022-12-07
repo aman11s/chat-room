@@ -52,3 +52,7 @@ button {
 .header {
   position: relative;
 }
+
+.text-left {
+  text-align: left;
+}

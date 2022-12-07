@@ -61,7 +61,7 @@ export const Signup = () => {
           const { id, label, name, type } = form;
           return (
             <label key={id}>
-              <div>{label}</div>
+              <div className="text-left">{label}</div>
               <input
                 onChange={changeHandler}
                 required

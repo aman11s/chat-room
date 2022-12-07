@@ -54,7 +54,7 @@ export const Login = () => {
           const { id, label, name, type } = form;
           return (
             <label key={id}>
-              <div>{label}</div>
+              <div className="text-left">{label}</div>
               <input
                 onChange={changeHandler}
                 value={formDetails[name]}
