@@ -84,16 +84,10 @@ const authSlice = createSlice({
     },
 
     // Logout Handler
-    [logoutHandler.pending]: (state) => {
-      state.status = "pending";
-    },
     [logoutHandler.fulfilled]: (state) => {
       state.status = "fulfilled";
       state.userData = {};
       localStorage.removeItem("userData");
-    },
-    [logoutHandler.rejected]: (state) => {
-      state.status = "rejected";
     },
 
     // Login Handler
