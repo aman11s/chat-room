@@ -5,9 +5,7 @@ import { useDispatch } from "react-redux";
 import "./Header.css";
 
 export const Header = () => {
-  const {
-    userData: { token },
-  } = useSelector((store) => store.auth);
+  const { userData } = useSelector((store) => store.auth);
 
   const dispatch = useDispatch();
 
@@ -19,7 +17,7 @@ export const Header = () => {
           💬
         </span>
       </h1>
-      {token && (
+      {userData?.token && (
         <button
           onClick={() => dispatch(logoutHandler())}
           className="btn error-btn logout-btn"

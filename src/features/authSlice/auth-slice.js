@@ -15,9 +15,11 @@ export const signupHandler = createAsyncThunk(
       const { username, email, password } = formData;
       await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, { displayName: username });
-      const { accessToken, displayName } = auth.currentUser;
+      const { accessToken, uid, displayName } = auth.currentUser;
+
       const user = {
         token: accessToken,
+        userId: uid,
         username: displayName,
         email: auth.currentUser.email,
       };
@@ -47,9 +49,10 @@ export const loginHandler = createAsyncThunk(
     try {
       const { email, password } = formData;
       const res = await signInWithEmailAndPassword(auth, email, password);
-      const { accessToken, displayName } = res.user;
+      const { accessToken, uid, displayName } = res.user;
       const user = {
         token: accessToken,
+        userId: uid,
         username: displayName,
         email: res.user.email,
       };
@@ -62,14 +65,21 @@ export const loginHandler = createAsyncThunk(
 );
 
 const initialState = {
-  userData: JSON.parse(localStorage.getItem("userData")) || {},
+  userData: null,
   status: "idle",
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    userLoginHandler: (state, { payload }) => {
+      state.userData = payload;
+    },
+    userLogoutHandler: (state) => {
+      state.userData = null;
+    },
+  },
   extraReducers: {
     // Sign up Handler
     [signupHandler.pending]: (state) => {
@@ -78,7 +88,6 @@ const authSlice = createSlice({
     [signupHandler.fulfilled]: (state, { payload }) => {
       state.fulfilled = "fulfilled";
       state.userData = payload.userData;
-      localStorage.setItem("userData", JSON.stringify(payload.userData));
       toast.success("Successfully signed up");
     },
     [signupHandler.rejected]: (state, { payload }) => {
@@ -89,8 +98,7 @@ const authSlice = createSlice({
     // Logout Handler
     [logoutHandler.fulfilled]: (state) => {
       state.status = "fulfilled";
-      state.userData = {};
-      localStorage.removeItem("userData");
+      state.userData = null;
       toast.success("Successfully logged out");
     },
 
@@ -101,7 +109,6 @@ const authSlice = createSlice({
     [loginHandler.fulfilled]: (state, { payload }) => {
       state.status = "fulfilled";
       state.userData = payload.userData;
-      localStorage.setItem("userData", JSON.stringify(payload.userData));
       toast.success("Successfully logged in");
     },
     [loginHandler.rejected]: (state, { payload }) => {
@@ -110,5 +117,7 @@ const authSlice = createSlice({
     },
   },
 });
+
+export const { userLoginHandler, userLogoutHandler } = authSlice.actions;
 
 export default authSlice.reducer;

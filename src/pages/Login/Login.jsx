@@ -27,10 +27,7 @@ const initialFormDetails = {
 export const Login = () => {
   const [formDetails, setFormDetails] = useState(initialFormDetails);
 
-  const {
-    userData: { token },
-    status,
-  } = useSelector((store) => store.auth);
+  const { userData, status } = useSelector((store) => store.auth);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -49,7 +46,7 @@ export const Login = () => {
 
   return (
     <>
-      {token && <Navigate to={from} replace />}
+      {userData?.token && <Navigate to={from} replace />}
       <form onSubmit={submitHandler} className="auth-form">
         <h2>Login</h2>
         {loginFormDetails.map((form) => {
