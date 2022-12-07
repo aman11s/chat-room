@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signupHandler } from "../../features";
 import { Navigate, useLocation } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const signupFormDetails = [
   {
@@ -37,6 +38,7 @@ export const Signup = () => {
   const dispatch = useDispatch();
   const {
     userData: { token },
+    status,
   } = useSelector((store) => store.auth);
   const location = useLocation();
 
@@ -73,7 +75,13 @@ export const Signup = () => {
             </label>
           );
         })}
-        <button className="btn primary-btn">Singup</button>
+        <button className="btn primary-btn">
+          {status === "pending" ? (
+            <ClipLoader color="#fff" speedMultiplier={2} size={14} />
+          ) : (
+            "Signup"
+          )}
+        </button>
         <Link to="/login" className="link">
           Already have an account
         </Link>

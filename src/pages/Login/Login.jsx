@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, Navigate } from "react-router-dom";
 import { loginHandler } from "../../features";
 import { useDispatch, useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const loginFormDetails = [
   {
@@ -28,6 +29,7 @@ export const Login = () => {
 
   const {
     userData: { token },
+    status,
   } = useSelector((store) => store.auth);
 
   const dispatch = useDispatch();
@@ -66,7 +68,13 @@ export const Login = () => {
             </label>
           );
         })}
-        <button className="btn primary-btn">Login</button>
+        <button className="btn primary-btn">
+          {status === "pending" ? (
+            <ClipLoader color="#fff" speedMultiplier={2} size={14} />
+          ) : (
+            "Login"
+          )}
+        </button>
         <Link to="/signup" className="link">
           Create an account
         </Link>
