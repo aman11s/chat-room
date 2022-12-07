@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../firebase";
+import toast from "react-hot-toast";
 
 export const signupHandler = createAsyncThunk(
   "auth/signupHandler",
@@ -55,7 +56,7 @@ export const loginHandler = createAsyncThunk(
       return { userData: user };
     } catch (e) {
       console.error(e);
-      rejectWithValue(e);
+      return rejectWithValue(e);
     }
   }
 );
@@ -78,9 +79,11 @@ const authSlice = createSlice({
       state.fulfilled = "fulfilled";
       state.userData = payload.userData;
       localStorage.setItem("userData", JSON.stringify(payload.userData));
+      toast.success("Successfully signed up");
     },
-    [signupHandler.rejected]: (state) => {
+    [signupHandler.rejected]: (state, { payload }) => {
       state.status = "rejected";
+      toast.error(payload.message.slice(10));
     },
 
     // Logout Handler
@@ -88,6 +91,7 @@ const authSlice = createSlice({
       state.status = "fulfilled";
       state.userData = {};
       localStorage.removeItem("userData");
+      toast.success("Successfully logged out");
     },
 
     // Login Handler
@@ -98,9 +102,11 @@ const authSlice = createSlice({
       state.status = "fulfilled";
       state.userData = payload.userData;
       localStorage.setItem("userData", JSON.stringify(payload.userData));
+      toast.success("Successfully logged in");
     },
-    [loginHandler.rejected]: (state) => {
+    [loginHandler.rejected]: (state, { payload }) => {
       state.status = "rejected";
+      toast.error(payload.message.slice(10));
     },
   },
 });

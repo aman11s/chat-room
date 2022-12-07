@@ -2,10 +2,12 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Home, Login, Signup } from "./pages";
 import { Header, RequiresAuth } from "./components";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <div className="App">
+      <Toaster />
       <header className="header">
         <Header />
       </header>
