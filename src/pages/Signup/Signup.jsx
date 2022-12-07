@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signupHandler } from "../../features";
+import { useNavigate } from "react-router-dom";
 
 const signupFormDetails = [
   {
@@ -34,15 +35,17 @@ export const Signup = () => {
   const [formDetails, setFormDetails] = useState(initialFormDetails);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const changeHandler = (e) => {
     setFormDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(signupHandler({ formData: formDetails }));
+    await dispatch(signupHandler({ formData: formDetails }));
     setFormDetails(initialFormDetails);
+    navigate("/");
   };
 
   return (
