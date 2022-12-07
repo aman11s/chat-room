@@ -36,11 +36,19 @@ button {
 
 .btn {
   border: none;
-  padding: 2px 5px;
+  padding: 4px 8px;
   border-radius: 5px;
 }
 
 .primary-btn {
   background-color: var(--primary-btn-bg-color);
   color: var(--white-color);
+}
+
+.error-btn {
+  background-color: var(--error-color);
+}
+
+.header {
+  position: relative;
 }
