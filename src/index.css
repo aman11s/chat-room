@@ -472,3 +472,91 @@ body {
 .ml-6 {
   margin-left: 4rem;
 }
+
+/* Font Sizes */
+
+.fs-xs {
+  font-size: 0.5rem;
+}
+
+.fs-sm {
+  font-size: 0.75rem;
+}
+
+.fs-base {
+  font-size: 1rem;
+}
+
+.fs-lg {
+  font-size: 1.25rem;
+}
+
+.fs-xl {
+  font-size: 1.5rem;
+}
+
+.fs-2xl {
+  font-size: 1.75rem;
+}
+
+.fs-3xl {
+  font-size: 2rem;
+}
+
+.fs-4xl {
+  font-size: 2.25rem;
+}
+
+.fs-5xl {
+  font-size: 2.75rem;
+}
+
+.fs-6xl {
+  font-size: 3rem;
+}
+
+.fs-7xl {
+  font-size: 3.25rem;
+}
+
+.fs-8xl {
+  font-size: 3.5rem;
+}
+
+.fs-9xl {
+  font-size: 3.75rem;
+}
+
+.fs-10xl {
+  font-size: 4rem;
+}
+
+/* Font Weight */
+
+.fw-100 {
+  font-weight: 100;
+}
+
+.fw-200 {
+  font-weight: 200;
+}
+
+.fw-300 {
+  font-weight: 300;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
